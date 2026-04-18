@@ -1,67 +1,108 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useTaskStore } from '../stores/taskStore';
 import TaskCard from './TaskCard.vue';
+import { VueDraggable } from 'vue-draggable-plus'; // 引入拖拽库
+import type { TaskStatus } from '../types';
 
 const taskStore = useTaskStore();
+
+// 将 Store 的只读数据包装成可读写的 computed
+const pendingList = computed({
+  get: () => taskStore.pendingTasks,
+  set: () => {} 
+});
+const inProgressList = computed({
+  get: () => taskStore.inProgressTasks,
+  set: () => {}
+});
+const completedList = computed({
+  get: () => taskStore.completedTasks,
+  set: () => {}
+});
+
+// 监听拖拽落入事件，通知 Store 更新数据
+const handleDragChange = (event: any, newStatus: TaskStatus) => {
+  if (event.added) { 
+    const taskId = event.added.element.id;
+    taskStore.updateTaskStatus(taskId, newStatus);
+  }
+};
+
 </script>
 
 <template>
+    <!--pending -->
   <div class="board-container">
+
     <div class="board-column">
       <div class="column-header">
         <h2 class="column-title">Pending</h2>
         <span class="task-count">{{ taskStore.pendingTasks.length }}</span>
       </div>
-      <!-- 任务列表 -->
-      <div class="task-list">
-        <TaskCard 
-          v-for="task in taskStore.pendingTasks" 
-          :key="task.id" 
-          :task="task" 
-        />
-        <!-- 无任务时显示 -->
-        <div v-if="taskStore.pendingTasks.length === 0" class="empty-state">
-          No tasks here yet.
-        </div>
+      <div class="list-container">
+        <div v-if="pendingList.length === 0" class="empty-state">Drop here</div>
+        <!--  拖拽，触发更新任务数据，后面两块相同  -->
+        <VueDraggable
+          v-model="pendingList"
+          group="tasks"
+          :animation="150"
+          ghostClass="ghost-card"
+          class="drag-area"
+          @change="(e: any) => handleDragChange(e, 'pending')"
+        >
+          <TaskCard v-for="task in pendingList" :key="task.id" :task="task" />
+        </VueDraggable>
+      
       </div>
     </div>
 
+    <!-- in progress -->
     <div class="board-column bg-blue-light">
       <div class="column-header">
         <h2 class="column-title text-blue">In Progress</h2>
         <span class="task-count bg-blue-badge">{{ taskStore.inProgressTasks.length }}</span>
       </div>
-      <!-- 调用getters筛选好的待处理任务数组 -->
-      <div class="task-list">
-        <TaskCard 
-          v-for="task in taskStore.inProgressTasks" 
-          :key="task.id" 
-          :task="task" 
-        />
-        <!-- 绑定id和传递单个任务 -->
-        <div v-if="taskStore.inProgressTasks.length === 0" class="empty-state">
-          Drop tasks here to start.
-        </div>
+
+      <div class="list-container">
+        <div v-if="inProgressList.length === 0" class="empty-state">Drop here</div>
+        
+        <VueDraggable
+          v-model="inProgressList"
+          group="tasks"
+          :animation="150"
+          ghostClass="ghost-card"
+          class="drag-area"
+          @change="(e: any) => handleDragChange(e, 'in_progress')"
+        >
+          <TaskCard v-for="task in inProgressList" :key="task.id" :task="task" />
+        </VueDraggable>
       </div>
     </div>
 
+    <!-- completed -->
     <div class="board-column bg-green-light">
       <div class="column-header">
         <h2 class="column-title text-green">Completed</h2>
         <span class="task-count bg-green-badge">{{ taskStore.completedTasks.length }}</span>
       </div>
-      <!-- 现实当前任务总数 -->
-      <div class="task-list">
-        <TaskCard 
-          v-for="task in taskStore.completedTasks" 
-          :key="task.id" 
-          :task="task" 
-        />
-        <div v-if="taskStore.completedTasks.length === 0" class="empty-state">
-          Good job! Check off some tasks.
-        </div>
+    
+      <div class="list-container">
+        <div v-if="completedList.length === 0" class="empty-state">Drop here</div>
+        
+        <VueDraggable
+          v-model="completedList"
+          group="tasks"
+          :animation="150"
+          ghostClass="ghost-card"
+          class="drag-area"
+          @change="(e: any) => handleDragChange(e, 'completed')"
+        >
+          <TaskCard v-for="task in completedList" :key="task.id" :task="task" />
+        </VueDraggable>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -85,6 +126,8 @@ const taskStore = useTaskStore();
   background-color: #f9fafb; 
   border-radius: 0.75rem;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
   min-height: 60vh;
   border: 1px solid #e5e7eb;
 }
@@ -96,14 +139,12 @@ const taskStore = useTaskStore();
 .text-blue { color: #1d4ed8; }
 .text-green { color: #15803d; }
 
-/*头部栏布局*/
+/*头部标题*/
 .column-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid transparent;
 }
 
 .column-title {
@@ -126,13 +167,45 @@ const taskStore = useTaskStore();
 .bg-blue-badge { background-color: #bfdbfe; color: #1e40af; }
 .bg-green-badge { background-color: #bbf7d0; color: #166534; }
 
+/*列表容器*/
+.list-container {
+  position: relative; 
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 确保高度接收 */
+.drag-area {
+  flex: 1; 
+  min-height: 150px; 
+}
+
+/* 拖走卡片时原地占位符样式 */
+:deep(.ghost-card) {
+  opacity: 0.4;
+  background-color: #f3f4f6;
+  border: 2px dashed #9ca3af;
+  border-radius: 0.5rem;
+}
+
+/* 拖拽时卡片样式 */
+:deep(.sortable-drag) {
+  cursor: grabbing !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
 /* 无任务时显示 */
 .empty-state {
-  text-align: center;
+  position: absolute;
+  inset: 0; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #9ca3af;
-  font-size: 0.9rem;
-  padding: 2rem 0;
   border: 2px dashed #d1d5db;
   border-radius: 0.5rem;
+  font-size: 0.9rem;
+  pointer-events: none;
 }
 </style>
