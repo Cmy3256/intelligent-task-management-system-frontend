@@ -29,20 +29,21 @@
    - A package manager like `npm` or `pnpm`.
 
  3. **Installation steps**
-   Clone the repository and install dependencies:
-   ```bash
-   npm install
-   ```
+   - Clone the repository and install dependencies:
+  ```bash
+  npm install
+  ```
  4. **Configuration**
-  This is a pure frontend application with no backend dependencies. No .env configuration or database setup is required. All data is managed locally in the browser's LocalStorage.
+   - This is a pure frontend application with no backend dependencies. No .env configuration or database setup is required. All data is managed locally in the browser's LocalStorage.
 
  5. **Running the application**
-  Start the local development server:
+  - Start the local development server:
   ```bash
   npm run dev
   ```
-  Open the provided local URL (usually http://localhost:5173) in your browser. To build for production, run ```bash
-  npm run build.
+  - Open the provided local URL (usually http://localhost:5173) in your browser. To build for production, run：  
+  ```bash
+  npm run build
   ```
 
 ## API Documentation
@@ -51,7 +52,7 @@
 ## Design Decisions
 - 1. **State Management (Pinia):** Opted for Pinia due to its lightweight nature, intuitive Composition API support, and superior TypeScript inference. Actions and derived states (Getters) are centralized, achieving perfect decoupling of the view and data layers.
 
-- 2. **UI Architecture (CSS):** Opted for Pinia due to its lightweight nature, intuitive Composition API support, and superior TypeScript inference. Actions and derived states (Getters) are centralized, achieving perfect decoupling of the view and data layers.
+- 2. **UI Architecture (CSS):** Utilizing native CSS features (backdrop-filter) and custom components ensures visual consistency and significantly reduces the bundle size.
 
 - 3. **Drag-and-Drop (vue-draggable-plus):** Chosen for its seamless Vue 3 integration and robust API, enabling complex interactions with minimal boilerplate.
 
