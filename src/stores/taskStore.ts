@@ -13,7 +13,7 @@ export const useTaskStore = defineStore('taskStore', {
     inProgressTasks: (state) => state.tasks.filter(t => t.status === 'in_progress'),
     completedTasks: (state) => state.tasks.filter(t => t.status === 'completed'),
   },
-  //派生状态，方便后续看板按列渲染
+  
 
   actions: {
     

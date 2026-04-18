@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import TaskForm from './components/TaskForm.vue';
 import TaskBoard from './components/TaskBoard.vue';
+
 </script>
 
 <template>
@@ -10,6 +12,8 @@ import TaskBoard from './components/TaskBoard.vue';
     <!-- 主体内容区域 -->
     <main class="app-main">
       <div class="max-w-7xl">
+        <TaskForm />
+        
         <TaskBoard />
       </div>
     </main>

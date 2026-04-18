@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useTaskStore } from '../stores/taskStore';
 import TaskCard from './TaskCard.vue';
-//引入 Store 实例
 
 const taskStore = useTaskStore();
 </script>

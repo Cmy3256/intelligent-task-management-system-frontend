@@ -7,7 +7,7 @@ const props = defineProps<{
   value: string;
 }>();
 
-// 根据类型和值，动态计算对应的 CSS 类名，赋予不同颜色
+// 根据类型和值计算对应的 CSS 类名
 const badgeClass = computed(() => {
   if (props.type === 'status') {
     const statusMap: Record<string, string> = {
