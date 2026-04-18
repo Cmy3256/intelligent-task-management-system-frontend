@@ -22,7 +22,7 @@
 ## Setup Instructions
 
 1.**Live demo**
-  Visit the live demo at [https://intelligent-task-management-system-tau.vercel.app/](https://intelligent-task-manager-system-frontend.vercel.app/).
+  Visit the live demo at [https://intelligent-task-management-system-tau.vercel.app/].
 
 2. **Prerequisites**
    - Ensure you have [Node.js] installed (v18+ recommended).
