@@ -24,6 +24,12 @@ const completedList = computed({
 </script>
 
 <template>
+    <div> 
+        <div v-if="taskStore.isFiltering" class="filter-warning">
+         ⚠️ Drag and drop is temporarily disabled while filtering or searching.
+        </div>
+    </div>
+
     <!--pending -->
   <div class="board-container">
 
@@ -38,6 +44,7 @@ const completedList = computed({
         <VueDraggable
           v-model="pendingList"
           group="tasks"
+          :disabled="taskStore.isFiltering"
           :animation="150"
           ghostClass="ghost-card"
           class="drag-area"
@@ -61,6 +68,7 @@ const completedList = computed({
         <VueDraggable
           v-model="inProgressList"
           group="tasks"
+          :disabled="taskStore.isFiltering"
           :animation="150"
           ghostClass="ghost-card"
           class="drag-area"
@@ -83,6 +91,7 @@ const completedList = computed({
         <VueDraggable
           v-model="completedList"
           group="tasks"
+          :disabled="taskStore.isFiltering"
           :animation="150"
           ghostClass="ghost-card"
           class="drag-area"
@@ -196,5 +205,16 @@ const completedList = computed({
   border-radius: 0.5rem;
   font-size: 0.9rem;
   pointer-events: none;
+}
+
+/*提示语样式*/
+.filter-warning {
+  background-color: #fffbeb;
+  color: #b45309;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+  border: 1px solid #fef3c7;
 }
 </style>

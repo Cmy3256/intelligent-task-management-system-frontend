@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TaskForm from './components/TaskForm.vue';
+import TaskFilter from './components/TaskFilter.vue';
 import TaskBoard from './components/TaskBoard.vue';
 
 </script>
@@ -13,7 +14,9 @@ import TaskBoard from './components/TaskBoard.vue';
     <main class="app-main">
       <div class="max-w-7xl">
         <TaskForm />
-        
+
+        <TaskFilter />
+
         <TaskBoard />
       </div>
     </main>

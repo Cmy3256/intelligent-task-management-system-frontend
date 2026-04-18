@@ -3,16 +3,34 @@ import type { Task, TaskStatus, TaskPriority } from '../types';
 
 export const useTaskStore = defineStore('taskStore', {
   state: () => ({
-    
     tasks: JSON.parse(localStorage.getItem('task_manager_data') || '[]') as Task[],
+    searchQuery: '', // 搜索关键字
+    filterPriority: 'all' as TaskPriority | 'all', // 优先级默认全选
   }),
-  //初始化时，尝试从本地缓存读取数据；如果没有，则设为空数组
-  
+
+
   getters: {
-    pendingTasks: (state) => state.tasks.filter(t => t.status === 'pending'),
-    inProgressTasks: (state) => state.tasks.filter(t => t.status === 'in_progress'),
-    completedTasks: (state) => state.tasks.filter(t => t.status === 'completed'),
-  },
+    // 先根据搜索和优先级过滤任务列表，得到一个新的filteredTasks列表
+    filteredTasks(state) {
+      return state.tasks.filter(task => {
+        const matchSearch = task.title.toLowerCase().includes(state.searchQuery.toLowerCase()) || 
+                            (task.description || '').toLowerCase().includes(state.searchQuery.toLowerCase());
+        const matchPriority = state.filterPriority === 'all' || task.priority === state.filterPriority;
+        
+        return matchSearch && matchPriority;
+      });
+    },
+    
+    // 从 filteredTasks中获取任务
+    pendingTasks(): Task[] { return this.filteredTasks.filter((t: Task) => t.status === 'pending'); },
+    inProgressTasks(): Task[] { return this.filteredTasks.filter((t: Task) => t.status === 'in_progress'); },
+    completedTasks(): Task[] { return this.filteredTasks.filter((t: Task) => t.status === 'completed'); },
+    
+    // 禁用拖拽
+    isFiltering(state): boolean { 
+      return state.searchQuery.trim() !== '' || state.filterPriority !== 'all'; 
+    }
+   },
   
 
   actions: {
