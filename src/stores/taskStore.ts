@@ -37,6 +37,23 @@ export const useTaskStore = defineStore('taskStore', {
       this.saveToLocalStorage();
     },
 
+    updateTaskGroup(status: TaskStatus, newTasks: Task[]) {
+      //  过滤掉当前状态的所有旧任务，把其他状态的任务安全地保留下来
+      const otherTasks = this.tasks.filter(t => t.status !== status);
+      
+      // 遍历新传进来的列表，强制修正状态
+      const updatedTasks = newTasks.map(t => {
+        if (t.status !== status) {
+          return { ...t, status, updated_at: Date.now() };
+        }
+        return t;
+      });
+
+      // 将其他任务和更新后的当前列任务合并，完成替换
+      this.tasks = [...otherTasks, ...updatedTasks];
+      this.saveToLocalStorage();
+    },
+
     updateTaskStatus(taskId: string, newStatus: TaskStatus) {
       const task = this.tasks.find(t => t.id === taskId);
       if (task) {

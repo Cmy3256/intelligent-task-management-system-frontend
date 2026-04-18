@@ -2,33 +2,25 @@
 import { computed } from 'vue';
 import { useTaskStore } from '../stores/taskStore';
 import TaskCard from './TaskCard.vue';
-import { VueDraggable } from 'vue-draggable-plus'; // 引入拖拽库
-import type { TaskStatus } from '../types';
+import { VueDraggable } from 'vue-draggable-plus';
 
 const taskStore = useTaskStore();
 
-// 将 Store 的只读数据包装成可读写的 computed
+// get读取分类数据，set将拖拽后的新数组整列写回
 const pendingList = computed({
   get: () => taskStore.pendingTasks,
-  set: () => {} 
+  set: (val) => taskStore.updateTaskGroup('pending', val)
 });
+
 const inProgressList = computed({
   get: () => taskStore.inProgressTasks,
-  set: () => {}
+  set: (val) => taskStore.updateTaskGroup('in_progress', val)
 });
+
 const completedList = computed({
   get: () => taskStore.completedTasks,
-  set: () => {}
+  set: (val) => taskStore.updateTaskGroup('completed', val)
 });
-
-// 监听拖拽落入事件，通知 Store 更新数据
-const handleDragChange = (event: any, newStatus: TaskStatus) => {
-  if (event.added) { 
-    const taskId = event.added.element.id;
-    taskStore.updateTaskStatus(taskId, newStatus);
-  }
-};
-
 </script>
 
 <template>
@@ -49,7 +41,6 @@ const handleDragChange = (event: any, newStatus: TaskStatus) => {
           :animation="150"
           ghostClass="ghost-card"
           class="drag-area"
-          @change="(e: any) => handleDragChange(e, 'pending')"
         >
           <TaskCard v-for="task in pendingList" :key="task.id" :task="task" />
         </VueDraggable>
@@ -73,7 +64,6 @@ const handleDragChange = (event: any, newStatus: TaskStatus) => {
           :animation="150"
           ghostClass="ghost-card"
           class="drag-area"
-          @change="(e: any) => handleDragChange(e, 'in_progress')"
         >
           <TaskCard v-for="task in inProgressList" :key="task.id" :task="task" />
         </VueDraggable>
@@ -96,7 +86,6 @@ const handleDragChange = (event: any, newStatus: TaskStatus) => {
           :animation="150"
           ghostClass="ghost-card"
           class="drag-area"
-          @change="(e: any) => handleDragChange(e, 'completed')"
         >
           <TaskCard v-for="task in completedList" :key="task.id" :task="task" />
         </VueDraggable>
