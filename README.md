@@ -21,22 +21,22 @@
 
 ## Setup Instructions
 
-1.**Live demo**
+ 1.**Live demo**
   Visit the live demo at [https://intelligent-task-management-system-tau.vercel.app/].
 
-2. **Prerequisites**
+ 2. **Prerequisites**
    - Ensure you have [Node.js] installed (v18+ recommended).
    - A package manager like `npm` or `pnpm`.
 
-3. **Installation steps**
+ 3. **Installation steps**
    Clone the repository and install dependencies:
    ```bash
    npm install
    ```
-4. **Configuration**
+ 4. **Configuration**
   This is a pure frontend application with no backend dependencies. No .env configuration or database setup is required. All data is managed locally in the browser's LocalStorage.
 
-5. **Running the application**
+ 5. **Running the application**
   Start the local development server:
   ```bash
   npm run dev
@@ -44,7 +44,6 @@
   Open the provided local URL (usually http://localhost:5173) in your browser. To build for production, run ```bash
   npm run build.
   ```
-
 
 ## API Documentation
  Note: This project utilizes a serverless architecture. All data flows are managed by Pinia and persisted on the client-side.
@@ -57,13 +56,12 @@
  3. **Drag-and-Drop (vue-draggable-plus):** Chosen for its seamless Vue 3 integration and robust API, enabling complex interactions with minimal boilerplate.
 
 ## Challenges & Solutions
-1. **State Desync between 3rd-party DOM Manipulation and Vue's Virtual DOM**
+ 1. **State Desync between 3rd-party DOM Manipulation and Vue's Virtual DOM**
 
  Issue: Dragging cards across columns caused Sortable.js to mutate the DOM directly, conflicting with Pinia's reactive state, leading to cards snapping back to their original positions.
 
  Solution: Replaced scattered @change event listeners with computed properties using get/set proxies. Upon a drag-and-drop event, the set trap triggers a Pinia action (updateTaskGroup) that performs a deep clone and full-column array overwrite. 
-
-2. **Data Loss During Filtered Drag-and-Drop**
+ 2. **Data Loss During Filtered Drag-and-Drop**
 
  Issue: Allowing drag-and-drop while the Kanban board is filtered (e.g., searching for a specific keyword) would cause the underlying array overwrite to permanently delete the temporarily hidden tasks.
 
@@ -76,4 +74,4 @@
  4. **Analytics and Statistics Dashboard**: Implement a comprehensive calculation and statistics module to track task completion rates, productivity trends, and workload distribution using interactive charts.
 
 ## Time Spent
-Approximately 3.5 hours.
+  **Approximately 3.5 hours.**
