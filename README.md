@@ -46,14 +46,14 @@
   ```
 
 ## API Documentation
- **Note:** This project utilizes a serverless architecture. All data flows are managed by Pinia and persisted on the client-side.
+- **Note:** This project utilizes a serverless architecture. All data flows are managed by Pinia and persisted on the client-side.
 
 ## Design Decisions
- 1. **State Management (Pinia):** Opted for Pinia due to its lightweight nature, intuitive Composition API support, and superior TypeScript inference. Actions and derived states (Getters) are centralized, achieving perfect decoupling of the view and data layers.
+- 1. **State Management (Pinia):** Opted for Pinia due to its lightweight nature, intuitive Composition API support, and superior TypeScript inference. Actions and derived states (Getters) are centralized, achieving perfect decoupling of the view and data layers.
 
- 2. **UI Architecture (CSS):** Utilizing native CSS features (backdrop-filter) and custom components ensures visual consistency and significantly reduces the bundle size.
+- 2. **UI Architecture (CSS):** Opted for Pinia due to its lightweight nature, intuitive Composition API support, and superior TypeScript inference. Actions and derived states (Getters) are centralized, achieving perfect decoupling of the view and data layers.
 
- 3. **Drag-and-Drop (vue-draggable-plus):** Chosen for its seamless Vue 3 integration and robust API, enabling complex interactions with minimal boilerplate.
+- 3. **Drag-and-Drop (vue-draggable-plus):** Chosen for its seamless Vue 3 integration and robust API, enabling complex interactions with minimal boilerplate.
 
 ## Challenges & Solutions
  1. **State Desync between 3rd-party DOM Manipulation and Vue's Virtual DOM**
