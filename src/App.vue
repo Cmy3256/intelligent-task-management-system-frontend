@@ -58,7 +58,7 @@ onMounted(() => {
   flex-direction: column;
 
   background-color: #fffeff;
-  background-image: linear-gradient(45deg, #0000006b 0%, #00000035 50%, #d4d3d3e7 100%); 
+  background-image: linear-gradient(45deg, #a5cbde7d 0%, #58326f61 50%, #353b7fc1 100%); 
 }
 
 /* 顶部样式 */
@@ -159,11 +159,12 @@ body.dark-theme textarea::placeholder { color: #64748b; }
 
 /* select选项的背景色 */
 body.dark-theme option {
-  background-color: #1e293b;
+  background-color: rgba(0, 0, 0, 0.8);
   color: #f8fafc;
 }
 
 body.dark-theme .task-count { background-color: rgba(255,255,255,0.1); color: #cbd5e1; }
+body.dark-theme .bg-red-badge { background-color: rgba(244, 67, 54, 0.2); color: #f44336; }
 body.dark-theme .bg-blue-badge { background-color: rgba(59, 130, 246, 0.2); color: #93c5fd; }
 body.dark-theme .bg-green-badge { background-color: rgba(34, 197, 94, 0.2); color: #86efac; }
 body.dark-theme .empty-state { color: #64748b; border-color: rgba(255,255,255,0.1); }

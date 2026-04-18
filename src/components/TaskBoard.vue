@@ -33,10 +33,10 @@ const completedList = computed({
     <!--pending -->
   <div class="board-container">
 
-    <div class="board-column">
+    <div class="board-column bg-red-light">
       <div class="column-header">
-        <h2 class="column-title">Pending</h2>
-        <span class="task-count">{{ taskStore.pendingTasks.length }}</span>
+        <h2 class="column-title text-red">Pending</h2>  
+        <span class="task-count bg-red-badge">{{ taskStore.pendingTasks.length }}</span>
       </div>
       <div class="list-container">
         <div v-if="pendingList.length === 0" class="empty-state">Drop here</div>
@@ -133,15 +133,20 @@ const completedList = computed({
 }
 
 /* 列的主题色 */
+.bg-red-light { 
+  background-color: rgba(224, 100, 69, 0.404); 
+  border-color: rgba(226, 71, 71, 0.671); 
+}
 .bg-blue-light { 
-  background-color: rgba(219, 234, 254, 0.3); 
-  border-color: rgba(191, 219, 254, 0.5); 
+  background-color: rgba(188, 208, 235, 0.719); 
+  border-color: rgb(116, 166, 228); 
 }
 .bg-green-light { 
-  background-color: rgba(220, 252, 227, 0.3); 
-  border-color: rgba(187, 247, 208, 0.5); 
+  background-color: rgba(220, 252, 227, 0.767); 
+  border-color: rgba(137, 189, 155, 0.993); 
 }
 /*字体的主题色*/
+.text-red { color: #f44336; }
 .text-blue { color: #1d4ed8; }
 .text-green { color: #15803d; }
 
@@ -171,6 +176,7 @@ const completedList = computed({
   font-size: 0.8rem;
   font-weight: 600;
 }
+.bg-red-badge { background-color: #f443364c; color: #780b0bed; }
 .bg-blue-badge { background-color: #bfdbfe; color: #1e40af; }
 .bg-green-badge { background-color: #bbf7d0; color: #166534; }
 
