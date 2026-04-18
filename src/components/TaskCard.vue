@@ -77,7 +77,10 @@ const toggleComplete = () => {
         {{ task.title }}
       </h3>
 
-      <p v-if="task.description" class="task-desc">{{ task.description }}</p>
+      <p v-if="task.description" 
+         class="task-desc" 
+         :title="task.description"
+      >{{ task.description }}</p>
       <!--创建时间，状态-->
       <div class="card-footer">
        <span class="task-date">{{ formatDate(task.created_at) }}</span>
@@ -163,11 +166,12 @@ const toggleComplete = () => {
   font-size: 0.875rem;
   color: #6b7280;
   /* 描述如果太长，超过两行自动显示省略号 */
-  display: -webkit-box;
-  -webkit-line-clamp: 2; 
-  line-clamp:2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: -webkit-box;           
+  -webkit-box-orient: vertical;  
+  -webkit-line-clamp: 2;          
+  overflow: hidden;              
+  text-overflow: ellipsis;        
+  word-break: break-all;          
 }
 
 .card-footer {
