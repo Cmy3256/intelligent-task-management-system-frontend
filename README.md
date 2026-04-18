@@ -21,24 +21,30 @@
 
 ## Setup Instructions
 
-1. **Prerequisites**
+1.**Live demo**
+  Visit the live demo at [https://intelligent-task-management-system-tau.vercel.app/](https://intelligent-task-manager-system-frontend.vercel.app/).
+
+2. **Prerequisites**
    - Ensure you have [Node.js] installed (v18+ recommended).
    - A package manager like `npm` or `pnpm`.
 
-2. **Installation steps**
+3. **Installation steps**
    Clone the repository and install dependencies:
    ```bash
    npm install
    ```
-3. **Configuration**
+4. **Configuration**
   This is a pure frontend application with no backend dependencies. No .env configuration or database setup is required. All data is managed locally in the browser's LocalStorage.
 
-4. **Running the application**
+5. **Running the application**
   Start the local development server:
-
-  Bash
+  ```bash
   npm run dev
-  Open the provided local URL (usually http://localhost:5173) in your browser. To build for production, run npm run build.
+  ```
+  Open the provided local URL (usually http://localhost:5173) in your browser. To build for production, run ```bash
+  npm run build.
+  ```
+
 
 ## API Documentation
  Note: This project utilizes a serverless architecture. All data flows are managed by Pinia and persisted on the client-side.
