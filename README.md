@@ -46,10 +46,10 @@
   ```
 
 ## API Documentation
- Note: This project utilizes a serverless architecture. All data flows are managed by Pinia and persisted on the client-side.
+ *Note: This project utilizes a serverless architecture. All data flows are managed by Pinia and persisted on the client-side.*
 
 ## Design Decisions
- 1. **State Management (Pinia):** Opted for   Pinia due to its lightweight nature, intuitive Composition API support, and superior TypeScript inference. Actions and derived states (Getters) are centralized, achieving perfect decoupling of the view and data layers.
+ 1. **State Management (Pinia):** Opted for Pinia due to its lightweight nature, intuitive Composition API support, and superior TypeScript inference. Actions and derived states (Getters) are centralized, achieving perfect decoupling of the view and data layers.
 
  2. **UI Architecture (CSS):** Utilizing native CSS features (backdrop-filter) and custom components ensures visual consistency and significantly reduces the bundle size.
 
@@ -58,14 +58,14 @@
 ## Challenges & Solutions
  1. **State Desync between 3rd-party DOM Manipulation and Vue's Virtual DOM**
 
- Issue: Dragging cards across columns caused Sortable.js to mutate the DOM directly, conflicting with Pinia's reactive state, leading to cards snapping back to their original positions.
+ - **Issue:** Dragging cards across columns caused Sortable.js to mutate the DOM directly, conflicting with Pinia's reactive state, leading to cards snapping back to their original positions.
 
- Solution: Replaced scattered @change event listeners with computed properties using get/set proxies. Upon a drag-and-drop event, the set trap triggers a Pinia action (updateTaskGroup) that performs a deep clone and full-column array overwrite. 
+ - **Solution:** Replaced scattered @change event listeners with computed properties using get/set proxies. Upon a drag-and-drop event, the set trap triggers a Pinia action (updateTaskGroup) that performs a deep clone and full-column array overwrite. 
  2. **Data Loss During Filtered Drag-and-Drop**
 
- Issue: Allowing drag-and-drop while the Kanban board is filtered (e.g., searching for a specific keyword) would cause the underlying array overwrite to permanently delete the temporarily hidden tasks.
+ - **Issue:** Allowing drag-and-drop while the Kanban board is filtered (e.g., searching for a specific keyword) would cause the underlying array overwrite to permanently delete the temporarily hidden tasks.
 
- Solution: Implemented a "Safety Lock" mechanism. A derived isFiltering state in the Store acts as a single source of truth. When active, it automatically passes :disabled="true" to the draggable components and displays a warning banner, eliminating any risk of data corruption.
+ - **Solution:** Implemented a "Safety Lock" mechanism. A derived isFiltering state in the Store acts as a single source of truth. When active, it automatically passes :disabled="true" to the draggable components and displays a warning banner, eliminating any risk of data corruption.
 
 ## Future Improvements
  1. **Backend Database Integration**: Migrate from LocalStorage to a robust backend database via RESTful APIs or GraphQL for reliable data persistence and multi-device synchronization.
