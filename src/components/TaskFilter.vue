@@ -48,25 +48,31 @@ const clearFilters = () => {
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
-  background: white;
+  background-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 1rem;
   border-radius: 0.75rem;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), inset 1px 1px 0px rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 /* 搜索区域样式 */
 .search-box {
   flex: 1;
   display: flex;
   align-items: center;
-  background-color: #f9fafb;
-  border: 1px solid #d1d5db;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 0.5rem;
   padding: 0 0.75rem;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
 }
 /* 搜索边框高亮 */
-.search-box:focus-within { border-color: #3b82f6; }
+.search-box:focus-within { 
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: #3b82f6; 
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
 /*图标*/
 .search-icon { font-size: 1rem; color: #9ca3af; margin-right: 0.5rem; }
 /* 输入框样式 */
@@ -82,11 +88,16 @@ const clearFilters = () => {
 .filter-box { display: flex; gap: 0.5rem; }
 .filter-select {
   padding: 0.75rem 1rem;
-  border: 1px solid #d1d5db;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 0.5rem;
   outline: none;
-  background: white;
   font-size: 0.95rem;
+  transition: all 0.2s;
+}
+.filter-select:focus {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: #3b82f6;
 }
 /* 清空键样式 */
 .clear-btn {

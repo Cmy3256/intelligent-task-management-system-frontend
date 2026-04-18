@@ -114,11 +114,13 @@ const toggleComplete = () => {
 
 <style scoped>
 .task-card {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.3); 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); 
   border-radius: 0.5rem;
   padding: 1rem;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(251, 251, 251, 0.5); 
   margin-bottom: 0.75rem;
   transition: all 0.2s ease;
 }

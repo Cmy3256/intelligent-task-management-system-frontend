@@ -66,13 +66,15 @@ const handleSubmit = () => {
 <style scoped>
 /*容器整体*/
 .task-form {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 1.5rem;
   border-radius: 0.75rem;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
-  border: 1px solid #e5e7eb;
-  margin-bottom: 2rem; 
-  /* 与下方看板保持间距 */
+  /* 高光内边框 */
+  box-shadow: 0 8px 12px -2px rgba(0,0,0,0.05), inset 1px 1px 0px rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  margin-bottom: 2rem;
 }
 
 .form-row {
@@ -101,27 +103,32 @@ const handleSubmit = () => {
 
 .form-input, .form-select {
   padding: 0.75rem 1rem;
-  border: 1px solid #d1d5db;
+  /* 输入框 */
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 0.5rem;
   font-family: inherit;
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.2s;
   width: 100%;
+}
+
+.form-input:focus, .form-select:focus {
+  /* 边框高亮 */
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 /*输入和下拉框*/
 
-.form-input:focus, .form-select:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
 
 .font-semibold { font-weight: 600; }
 .text-sm { font-size: 0.875rem; }
 .text-gray { color: #4b5563; }
 
 .submit-btn {
-  background-color: #2563eb;
+  background-color: #2564eb1a;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -129,12 +136,15 @@ const handleSubmit = () => {
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
+  box-shadow: 0 8px 12px -2px rgba(0,0,0,0.05), inset 1px 1px 0px rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   white-space: nowrap; /* 防止按钮文字换行 */
 }
 /* 提交按钮和动画 */
 
 .submit-btn:hover {
-  background-color: #1d4ed8;
+  background-color: #1d1f8b73;
+  transform: translateY(-2px);
 }
 /*悬浮加深色*/
 

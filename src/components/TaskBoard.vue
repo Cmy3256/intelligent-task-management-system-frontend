@@ -121,18 +121,26 @@ const completedList = computed({
 
 /*看板列基础样式*/
 .board-column {
-  background-color: #f9fafb; 
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   border-radius: 0.75rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   min-height: 60vh;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-/* 区分列的主题颜色 */
-.bg-blue-light { background-color: #eff6ff; border-color: #dbeafe; }
-.bg-green-light { background-color: #f0fdf4; border-color: #dcfce3; }
+/* 列的主题色 */
+.bg-blue-light { 
+  background-color: rgba(219, 234, 254, 0.3); 
+  border-color: rgba(191, 219, 254, 0.5); 
+}
+.bg-green-light { 
+  background-color: rgba(220, 252, 227, 0.3); 
+  border-color: rgba(187, 247, 208, 0.5); 
+}
 /*字体的主题色*/
 .text-blue { color: #1d4ed8; }
 .text-green { color: #15803d; }
@@ -140,8 +148,9 @@ const completedList = computed({
 /*头部标题*/
 .column-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; 
   align-items: center;
+  gap: 0.75rem; 
   margin-bottom: 1rem;
 }
 
