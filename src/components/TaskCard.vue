@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { Task, TaskStatus } from '../types/index.ts';
+import type { Task, TaskStatus, TaskPriority } from '../types';
 import StatusBadge from './StatusBadge.vue';
 import { useTaskStore } from '../stores/taskStore';
+import { ref } from 'vue';
 
 //接收看板组件传过来的具体的 task 数据
 const props = defineProps<{
   task: Task;
 }>();
 
-//引入 Store
 const taskStore = useTaskStore();
 
 //格式化时间戳为易读日期
@@ -28,32 +28,88 @@ const handleStatusChange = (event: Event) => {
   const newStatus = (event.target as HTMLSelectElement).value as TaskStatus;
   taskStore.updateTaskStatus(props.task.id, newStatus);
 };
+
+// 编辑
+const isEditing = ref(false);
+const editTitle = ref('');
+const editDescription = ref('');
+const editPriority = ref<TaskPriority>('medium');
+
+const startEdit = () => {
+  editTitle.value = props.task.title;
+  editDescription.value = props.task.description || '';
+  editPriority.value = props.task.priority;
+  isEditing.value = true;
+};
+
+const saveEdit = () => {
+  if (!editTitle.value.trim()) return;
+  taskStore.updateTaskDetails(props.task.id, editTitle.value, editDescription.value, editPriority.value);
+  isEditing.value = false;
+};
+
+const toggleComplete = () => {
+  const newStatus = props.task.status === 'completed' ? 'pending' : 'completed';
+  taskStore.updateTaskStatus(props.task.id, newStatus);
+};
+
 </script>
 
 <template>
   <div class="task-card">
-    <div class="card-header">
-      <StatusBadge type="priority" :value="task.priority" />
-      <button class="delete-btn" @click="handleDelete" title="Delete Task">×</button>
-    </div>
+    <div v-if="!isEditing">
     
-    <h3 class="task-title">{{ task.title }}</h3>
-    <p v-if="task.description" class="task-desc">{{ task.description }}</p>
-    
-    <div class="card-footer">
-      <span class="task-date">{{ formatDate(task.created_at) }}</span>
-      
-      <select 
+      <div class="card-header">
+        <StatusBadge type="priority" :value="task.priority" />
+        <div>
+         <button @click="startEdit" class="edit-btn" title="Edit">✏️</button>
+         <button class="delete-btn" @click="handleDelete" title="Delete Task">×</button>
+       </div>
+      </div>
+        <!--任务展示-->
+       <h3 class="task-title" :class="{ 'line-through': task.status === 'completed' }">
+        <input 
+          type="checkbox" 
+          :checked="task.status === 'completed'" 
+          @change="toggleComplete" 
+          class="check-box"
+        />
+        {{ task.title }}
+      </h3>
+
+      <p v-if="task.description" class="task-desc">{{ task.description }}</p>
+      <!--创建时间，状态-->
+      <div class="card-footer">
+       <span class="task-date">{{ formatDate(task.created_at) }}</span>
+       <select 
         :value="task.status" 
         @change="handleStatusChange"
         class="status-select"
-      >
+       >
         <option value="pending">Pending</option>
         <option value="in_progress">In Progress</option>
         <option value="completed">Completed</option>
       </select>
     </div>
   </div>
+   <!-- 进入编辑 -->
+  <div v-else class="edit-mode">
+      <input v-model="editTitle" type="text" class="edit-input" />
+      <textarea v-model="editDescription" class="edit-input" rows="2"></textarea>
+      <div class="edit-actions">
+        <select v-model="editPriority" class="edit-input select-small">
+          <option value="low">Low</option>
+          <option value="medium">Med</option>
+          <option value="high">High</option>
+        </select>
+        <div>
+          <button @click="isEditing = false" class="btn cancel-btn">Cancel</button>
+          <button @click="saveEdit" class="btn save-btn">Save</button>
+        </div>
+      </div>
+    </div>
+
+</div>
 </template>
 
 <style scoped>
@@ -141,4 +197,19 @@ const handleStatusChange = (event: Event) => {
 .status-select:focus {
   border-color: #3b82f6;
 }
+
+/* 编辑下样式 */
+.edit-btn { background: none; border: none; cursor: pointer; opacity: 0.6; margin-right: 8px; }
+.edit-btn:hover { opacity: 1; }
+.check-box { margin-right: 8px; transform: scale(1.2); cursor: pointer; }
+.line-through { text-decoration: line-through; color: #9ca3af; }
+
+.edit-mode { display: flex; flex-direction: column; gap: 8px; }
+.edit-input { width: 100%; padding: 6px; border: 1px solid #d1d5db; border-radius: 4px; font-family: inherit; }
+.edit-actions { display: flex; justify-content: space-between; }
+.select-small { width: auto; padding: 4px; }
+.btn { padding: 4px 10px; border: none; border-radius: 4px; cursor: pointer; }
+.save-btn { background: #2563eb; color: white; margin-left: 8px; }
+.cancel-btn { background: #e5e7eb; }
+
 </style>

@@ -82,6 +82,18 @@ export const useTaskStore = defineStore('taskStore', {
     },
     //更新任务状态
 
+    // 编辑任务
+    updateTaskDetails(taskId: string, title: string, description: string, priority: TaskPriority) {
+      const task = this.tasks.find(t => t.id === taskId);
+      if (task) {
+        task.title = title;
+        task.description = description;
+        task.priority = priority;
+        task.updated_at = Date.now();
+        this.saveToLocalStorage();
+      }
+    },
+
     deleteTask(taskId: string) {
       this.tasks = this.tasks.filter(t => t.id !== taskId);
       this.saveToLocalStorage();
